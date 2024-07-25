@@ -233,7 +233,7 @@ export default function Home() {
             <p className="mb-4">Subscribe to our newsletter and get 15% off at discount code.</p>
             <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="flex flex-col items-center">
               {/* Hidden field for API key */}
-              <input type="hidden" name="access_key" value="4eb8d3e5-24ba-4204-aa0e-5917411f4df4" />
+              <input type="hidden" name="access_key" value="be27c31c-c853-4cff-835d-bb71f933340d" />
 
              
               <input
