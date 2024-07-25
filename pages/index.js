@@ -1,118 +1,262 @@
+
+import Layout from "@/components/Layout/Layout";
 import Image from "next/image";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
-
+import React, { useState } from 'react';
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+const specialCoffees = [
+  {
+    id: 1,
+    name: 'Lungo Coffee',
+    description: 'A longer espresso drink, with a touch of bitterness',
+    price: 'Rs. 199',
+    imageUrl: '/image1.jpg'
+  },
+  {
+    id: 2,
+    name: 'Dalgona Coffee',
+    description: 'A whipped coffee drink with a rich flavor',
+    price: 'Rs. 159',
+    imageUrl: '/image2.jpg'
+  },
+  {
+    id: 3,
+    name: 'Iced Coffee',
+    description: 'A cold coffee beverage served over ice',
+    price: 'Rs. 149',
+    imageUrl: '/image6.jpg'
+  },
+  {
+    id: 4,
+    name: 'Filter Coffee',
+    description: 'A smooth and rich coffee brewed using a filter',
+    price: 'Rs. 59',
+    imageUrl: '/image5.jpg'
+  }
+];
+const specialDesserts = [
+  {
+    id: 1,
+    name: 'Gulab Jamun',
+    description: 'A popular Indian dessert made of fried dough balls in sweet syrup',
+    price: 'Rs. 199',
+    imageUrl: '/gulabjamun.jpg'
+  },
+  {
+    id: 2,
+    name: 'Chocolate Tiramisu',
+    description: 'A classic Italian dessert with layers of coffee-soaked ladyfingers and mascarpone cheese',
+    price: 'Rs. 250',
+    imageUrl: '/chocolate.jpg'
+  },
+  {
+    id: 3,
+    name: 'Churros',
+    description: 'A Spanish dessert of fried dough pastry, often sprinkled with sugar and served with chocolate sauce',
+    price: 'Rs. 170',
+    imageUrl: '/churros.jpg'
+  },
+  {
+    id: 4,
+    name: 'Australian Lamingtons',
+    description: 'A dessert made of sponge cake coated in chocolate sauce and rolled in desiccated coconut',
+    price: 'Rs. 280',
+    imageUrl: '/Lamingtons.jpg'
+  }
+];
+const reviews = [
+  {
+    id: 1,
+    name: 'Joana Adams',
+    rating: 5,
+    comment: 'I dropped by to have a cappuccino and honestly, their coffee was top-notch. The service was great too! I highly recommend this place if you want to have a great coffee experience.',
+    imageUrl: '/avatar1.jpg'
+  },
+  {
+    id: 2,
+    name: 'Sam Williams',
+    rating: 5,
+    comment: 'I\'ve been ordering beans from you for ten years, the quality of the product is consistently high. I\'m grateful for the care that is apparently put into the roasts and the excellent customer service. You always give way to the best cup of coffee.',
+    imageUrl: '/avatar3.jpg'
+  },
+  {
+    id: 3,
+    name: 'Angela Gonzales',
+    rating: 5,
+    comment: 'I\'ve been getting beans from you for six years now. The quality is always great and the delivery is timely. Keep up the good work. You have the best coffee beans!',
+    imageUrl: '/avatar2.jpg'
+  }
+];
 export default function Home() {
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: new FormData(e.target),
+      });
+
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Subscription Successful",
+          text: "Thank you for subscribing!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setEmail(''); // Clear email input after submission
+      } else {
+        throw new Error('Subscription failed');
+      }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Subscription Failed",
+        text: error.message,
+      });
+    }
+  };
+
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+
+      <Layout>
+        {/* main part */}
+        <div id="shop" className="flex  justify-center  space-x-16  bg-orange-200 ">
+          <div className="flex-row justify-center ">
+            <Image src="/cup.png" width={70} height={50} className="py-2" alt="A cup of coffee" />
+            <p className="text-amber-700 ">
+              Hot Coffee
+            </p>
+          </div>
+          <div className="flex-row justify-center">
+            <Image src="/coldcoffee.png" width={70} height={50} className="py-2" alt="A cup of coffee" />
+            <p className="text-amber-700 ">
+              Cold Coffee
+            </p>
+          </div>
+          <div className="flex-row justify-center  ">
+            <Image src="/coffee-cup.png" width={60} height={80} className="py-3" alt="A cup of coffee" />
+            <p className="text-amber-700 ">
+              Cup Coffee
+            </p>
+          </div>
+          <div className="flex-row justify-center  ">
+            <Image src="/cake.png" width={70} height={50} className="py-2" alt="A cup of coffee" />
+            <p className="text-amber-700 ">
+              Dessert
+            </p>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        {/* special coffee */}
+        <div id="coffee" className="bg-white ">
+          <h2 className="text-center py-10 text-3xl font-bold mb-8">Our Special Coffee</h2>
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {specialCoffees.map(coffee => (
+              <div key={coffee.id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                <Image src={coffee.imageUrl} alt={coffee.name} width={500} height={400} className="w-full h-48 object-cover" />
+                <div className="p-4">
+                  <h3 className="text-xl font-bold mb-2">{coffee.name}</h3>
+                  <p className="text-gray-600 mb-2">{coffee.description}</p>
+                  <p className="text-gray-800 font-bold mb-4">{coffee.price}</p>
+                  <button className="bg-blue-500 text-white py-2 px-4 rounded">Order Now</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* bakery shop */}
+        <div id="bakery" className="bg-white ">
+          <h2 className="text-center py-10 text-3xl font-bold mb-8">Our Special Dessert</h2>
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8  py-5">
+            {specialDesserts.map(dessert => (
+              <div key={dessert.id} className="bg-white shadow-md rounded-lg overflow-hidden ">
+                <Image src={dessert.imageUrl} alt={dessert.name} width={500} height={400} className="w-full h-48 object-cover" />
+                <div className="p-4">
+                  <h3 className="text-xl font-bold mb-2">{dessert.name}</h3>
+                  <p className="text-gray-600 mb-2">{dessert.description}</p>
+                  <p className="text-gray-800 font-bold mb-4">{dessert.price}</p>
+                  <button className="bg-blue-500 text-white py-2 px-4 rounded">Order Now</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div
+          id="about"
+          className="h-screen bg-cover flex flex-col items-center justify-center bg-center space-y-6"
+          style={{ backgroundImage: "url('/bg4.jpg')" }}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
+          <p className="text-center font-extrabold text-5xl text-amber-900">
+            Check Out OuR <br />
+            Best Coffee Betans
           </p>
-        </a>
+          <button className="bg-orange-900 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-full transition duration-300 ease-in-out">
+            <a
+              href="#coffee">   Explore Our Products</a>
+          </button>
+        </div>
+{/* reviews part */}
+        <div id="reviews" className="bg-white py-10">
+          <h2 className="text-center text-3xl font-bold mb-8">Our Happy Customers</h2>
+          <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {reviews.map(review => (
+              <div key={review.id} className="bg-white shadow-lg p-6 rounded-lg">
+                <div className="flex items-center mb-4">
+                  <img src={review.imageUrl} alt={review.name} className="w-12 h-12 rounded-full mr-4" />
+                  <div>
+                    <h3 className="text-xl font-bold">{review.name}</h3>
+                    <div className="flex items-center">
+                      {Array.from({ length: review.rating }).map((_, index) => (
+                        <svg key={index} className="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 15l-5.878 3.09 1.122-6.545L.489 6.41l6.563-.953L10 0l2.948 5.457 6.563.953-4.755 4.133 1.122 6.545L10 15z" />
+                        </svg>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-gray-700">{review.comment}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+          className="h-screen bg-cover flex flex-col items-center justify-center bg-center space-y-6"
+          style={{ backgroundImage: "url('/bg4.jpg')" }}
         >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+          <div className="container mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">Join in and get 15% Off!</h2>
+            <p className="mb-4">Subscribe to our newsletter and get 15% off at discount code.</p>
+            <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="flex flex-col items-center">
+              {/* Hidden field for API key */}
+              <input type="hidden" name="access_key" value="4eb8d3e5-24ba-4204-aa0e-5917411f4df4" />
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
+             
+              <input
+                type="email"
+                name="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email address"
+                className="p-2 rounded-md border border-gray-300 mb-4 w-full max-w-sm"
+                required
+              />
+              <button
+                type="submit"
+                className="bg-orange-900 text-white py-2 px-6 rounded-md hover:bg-orange-700 transition duration-300"
+              >
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+        
+      </Layout>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   );
 }
